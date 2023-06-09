@@ -35,13 +35,19 @@ class MainWindow(QMainWindow):
         line_edit.setGeometry(200, 150, 400, 40)
 
         # Creating a push button
-        button = QPushButton("Convert to PDF", self)
+        button_browse = QPushButton("Browse", self)
 
         # Setting geometry of button
-        button.setGeometry(350, 220, 100, 40)
+        button_browse.setGeometry(350, 220, 100, 40)
 
         # Adding action to button
-        button.clicked.connect(self.convert_text_to_pdf)
+        button_browse.clicked.connect(self.convert_text_to_pdf)
+
+        button_convert_to_pdf = QPushButton("Convert to PDF", self)
+
+        button_convert_to_pdf.setGeometry(350, 270, 100, 40)
+
+        #button_convert_to_pdf.clicked.connect(self.convert_text_to_pdf())
 
     def convert_text_to_pdf(self):
         print("Button Clicked")
@@ -56,4 +62,4 @@ window = MainWindow()
 # Start the app
 app.exec()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+

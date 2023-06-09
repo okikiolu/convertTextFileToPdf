@@ -1,6 +1,7 @@
 # This is a Python Script that converts Text Files to PDF
 import sys
 
+from PyQt6.QtCore import QStringListModel
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
@@ -11,7 +12,9 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QWidget,
+    QFileDialog,
 )
+from pathlib import Path
 
 
 class MainWindow(QMainWindow):
@@ -21,45 +24,60 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Convert Text File to PDF App")
 
-        # Calling method
-        self.ui_components()
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        # Creating line edit
+        self.line_edit = QLineEdit(self)
+
+        # Setting geometry of line edit
+        self.line_edit.setGeometry(200, 150, 400, 40)
+
+        # Creating a push button
+        self.button_browse = QPushButton("Browse", self)
+
+        # Setting geometry of button
+        self.button_browse.setGeometry(350, 220, 100, 40)
+
+        # Adding action to button
+        self.button_browse.clicked.connect(self.open_file_dialog)
+
+        self.button_convert_to_pdf = QPushButton("Convert to PDF", self)
+
+        self.button_convert_to_pdf.setGeometry(350, 270, 100, 40)
+
+        self.button_convert_to_pdf.clicked.connect(self.convert_text_to_pdf)
+
+        layout.addWidget(self.line_edit)
+        layout.addWidget(self.button_browse)
+        layout.addWidget(self.button_convert_to_pdf)
 
         # Showing all the widgets
         self.show()
 
-    def ui_components(self):
-        # Creating line edit
-        line_edit = QLineEdit(self)
-
-        # Setting geometry of line edit
-        line_edit.setGeometry(200, 150, 400, 40)
-
-        # Creating a push button
-        button_browse = QPushButton("Browse", self)
-
-        # Setting geometry of button
-        button_browse.setGeometry(350, 220, 100, 40)
-
-        # Adding action to button
-        button_browse.clicked.connect(self.convert_text_to_pdf)
-
-        button_convert_to_pdf = QPushButton("Convert to PDF", self)
-
-        button_convert_to_pdf.setGeometry(350, 270, 100, 40)
-
-        #button_convert_to_pdf.clicked.connect(self.convert_text_to_pdf())
-
     def convert_text_to_pdf(self):
-        print("Button Clicked")
+        print("Hello")
+
+    def open_file_dialog(self):
+        home_dir = str(Path.home())
+        filename, ok = QFileDialog.getOpenFileName(
+            self,
+            "Select a File",
+            home_dir
+        )
+        if filename:
+            path = Path(filename)
+            self.line_edit.setText(str(path))
 
 
-# Create pyqt6 app
-app = QApplication(sys.argv)
+if __name__ == '__main__':
+    # Create pyqt6 app
+    app = QApplication(sys.argv)
 
-# Create the instance of our Window
-window = MainWindow()
+    # Create the instance of our Window
+    window = MainWindow()
 
-# Start the app
-app.exec()
+    # Start the app
+    app.exec()
 
 

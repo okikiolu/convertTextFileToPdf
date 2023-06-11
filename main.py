@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (
     QFileDialog,
 )
 from pathlib import Path
+from fpdf import FPDF
 
 
 class MainWindow(QMainWindow):
@@ -56,7 +57,17 @@ class MainWindow(QMainWindow):
         self.show()
 
     def convert_text_to_pdf(self):
-        print("Hello")
+        pdf = FPDF()
+        # Add a page
+        pdf.add_page()
+        # set style and size of font
+        # that you want in the pdf
+        pdf.set_font("Arial", size=15)
+        filename = self.line_edit.text()
+        file = open(filename, "r")
+        for f in file:
+            pdf.cell(200, 10, txt=f, ln=1, align='C')
+            pdf.output(filename.replace('.txt', '.pdf'))
 
     def open_file_dialog(self):
         home_dir = str(Path.home())
@@ -79,5 +90,3 @@ if __name__ == '__main__':
 
     # Start the app
     app.exec()
-
-
